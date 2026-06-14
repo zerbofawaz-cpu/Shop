@@ -1,355 +1,819 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edith Shop | Tendances Féminines à Petit Prix</title>
-    <!-- Intégration de polices élégantes -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
-    <!-- Icônes FontAwesome pour le style -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <style>
-        /* --- STYLES GENERAUX --- */
-        :root {
-            --primary-color: #111;
-            --accent-color: #e0a96d; /* Un doré/beige élégant */
-            --bg-light: #f9f9f9;
-            --text-muted: #666;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Edith Shop 🦋 – Chic & Accessible</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  /* ─── TOKENS ─── */
+  :root {
+    --rose:    #F2A7C3;
+    --lilas:   #C9A7E0;
+    --pêche:   #F8CBA6;
+    --bleu:    #A7C9E0;
+    --crème:   #FDF6F0;
+    --or:      #C8A96E;
+    --texte:   #3A2D35;
+    --glass:   rgba(255,255,255,0.45);
+    --glass2:  rgba(255,255,255,0.25);
+    --blur:    blur(18px);
+    --r:       20px;
+    --shadow:  0 8px 40px rgba(180,130,160,0.18);
+  }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Montserrat', sans-serif;
-        }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-        body {
-            background-color: #fff;
-            color: var(--primary-color);
-            line-height: 1.6;
-        }
+  html { scroll-behavior: smooth; }
 
-        /* --- EN-TÊTE / NAVIGATION --- */
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 5%;
-            border-bottom: 1px solid #eee;
-            position: sticky;
-            top: 0;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(5px);
-            z-index: 1000;
-        }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    color: var(--texte);
+    background: var(--crème);
+    overflow-x: hidden;
+  }
 
-        .logo {
-            font-family: 'Playfair Display', serif;
-            font-size: 24px;
-            font-weight: 700;
-            letter-spacing: 2px;
-        }
+  /* ─── BACKGROUND GRADIENT ANIMÉ ─── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(135deg, #fce4ec 0%, #f3e5f5 25%, #e8eaf6 50%, #fce4ec 75%, #fff8e1 100%);
+    background-size: 400% 400%;
+    animation: bgShift 12s ease infinite;
+    z-index: -1;
+  }
+  @keyframes bgShift {
+    0%   { background-position: 0% 50%; }
+    50%  { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
 
-        nav a {
-            text-decoration: none;
-            color: var(--primary-color);
-            margin-left: 20px;
-            font-size: 14px;
-            font-weight: 600;
-            text-transform: uppercase;
-            transition: color 0.3s;
-        }
+  /* ─── NAV ─── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--glass);
+    backdrop-filter: var(--blur);
+    -webkit-backdrop-filter: var(--blur);
+    border-bottom: 1px solid rgba(255,255,255,0.6);
+    padding: 14px 24px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem; font-weight: 600; letter-spacing: .04em;
+    color: var(--texte); text-decoration: none;
+  }
+  .nav-logo span { color: var(--or); }
+  .nav-links { display: flex; gap: 28px; list-style: none; }
+  .nav-links a {
+    text-decoration: none; font-size: .875rem; font-weight: 500;
+    color: var(--texte); opacity: .75; transition: opacity .2s;
+  }
+  .nav-links a:hover { opacity: 1; }
+  .nav-wa {
+    background: linear-gradient(135deg, #25D366, #128C7E);
+    color: #fff; border: none; border-radius: 50px;
+    padding: 9px 18px; font-size: .8rem; font-weight: 500;
+    cursor: pointer; text-decoration: none;
+    display: flex; align-items: center; gap: 6px;
+    transition: transform .2s, box-shadow .2s;
+  }
+  .nav-wa:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(37,211,102,.4); }
 
-        nav a:hover {
-            color: var(--accent-color);
-        }
+  /* ─── HAMBURGER (mobile) ─── */
+  .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+  .hamburger span { width: 24px; height: 2px; background: var(--texte); border-radius: 2px; transition: .3s; }
 
-        /* --- SECTION HERO (BANNIÈRE PRINCIPALE 4K) --- */
-        .hero {
-            height: 80vh;
-            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1483985988355-763728e1935b?q=80&w=1920&auto=format&fit=crop') no-repeat center center/cover;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            color: white;
-            padding: 0 20px;
-        }
+  /* ─── HERO ─── */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center; padding: 120px 24px 80px;
+    position: relative; overflow: hidden;
+  }
+  .hero-floats { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+  .float { position: absolute; font-size: 2rem; animation: floatUp linear infinite; opacity: .55; }
+  @keyframes floatUp {
+    0%   { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+    10%  { opacity: .55; }
+    90%  { opacity: .55; }
+    100% { transform: translateY(-120px) rotate(360deg); opacity: 0; }
+  }
 
-        .hero h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: 48px;
-            margin-bottom: 15px;
-            letter-spacing: 3px;
-        }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--glass);
+    backdrop-filter: var(--blur);
+    border: 1px solid rgba(255,255,255,.7);
+    border-radius: 50px; padding: 6px 18px; font-size: .78rem;
+    letter-spacing: .1em; text-transform: uppercase; color: var(--or);
+    margin-bottom: 24px; font-weight: 500;
+    animation: fadeDown .8s ease both;
+  }
 
-        .hero p {
-            font-size: 18px;
-            margin-bottom: 25px;
-            font-weight: 300;
-        }
+  .hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3rem, 10vw, 6.5rem);
+    font-weight: 300; line-height: 1.05; letter-spacing: -.02em;
+    color: var(--texte);
+    animation: fadeDown .8s .1s ease both;
+  }
+  .hero h1 em { font-style: italic; color: var(--lilas); }
 
-        .btn-shop {
-            padding: 12px 35px;
-            background-color: white;
-            color: black;
-            text-decoration: none;
-            font-weight: 600;
-            text-transform: uppercase;
-            font-size: 13px;
-            letter-spacing: 1px;
-            transition: all 0.3s ease;
-        }
+  .hero-tagline {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic; font-size: 1.1rem; color: #7a6070;
+    margin: 16px 0 36px; letter-spacing: .04em;
+    animation: fadeDown .8s .2s ease both;
+  }
 
-        .btn-shop:hover {
-            background-color: var(--accent-color);
-            color: white;
-            transform: translateY(-2px);
-        }
+  .hero-cta {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: linear-gradient(135deg, var(--rose), var(--lilas));
+    color: #fff; text-decoration: none;
+    padding: 16px 40px; border-radius: 50px; font-size: 1rem; font-weight: 500;
+    box-shadow: 0 10px 40px rgba(200,100,160,.35);
+    transition: transform .25s, box-shadow .25s;
+    animation: fadeDown .8s .3s ease both;
+  }
+  .hero-cta:hover { transform: translateY(-4px) scale(1.03); box-shadow: 0 18px 50px rgba(200,100,160,.45); }
 
-        /* --- SECTION ARTICLES (GRANDS VISUELS) --- */
-        .container {
-            max-width: 1200px;
-            margin: 60px auto;
-            padding: 0 20px;
-        }
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
 
-        .section-title {
-            font-family: 'Playfair Display', serif;
-            text-align: center;
-            font-size: 32px;
-            margin-bottom: 40px;
-            position: relative;
-        }
+  /* ─── SLIDER TENDANCES ─── */
+  .slider-section { padding: 80px 0 60px; overflow: hidden; }
+  .section-label {
+    text-align: center; font-size: .75rem; letter-spacing: .18em;
+    text-transform: uppercase; color: var(--or); font-weight: 500; margin-bottom: 8px;
+  }
+  .section-title {
+    text-align: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 300;
+    margin-bottom: 40px;
+  }
 
-        .section-title::after {
-            content: '';
-            display: block;
-            width: 50px;
-            height: 2px;
-            background-color: var(--accent-color);
-            margin: 10px auto 0;
-        }
+  .slider-track {
+    display: flex; gap: 20px; padding: 0 24px;
+    overflow-x: auto; scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding-bottom: 12px;
+  }
+  .slider-track::-webkit-scrollbar { display: none; }
 
-        /* Grille d'affichage des articles */
-        .products-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); /* Grands blocs d'articles */
-            gap: 40px;
-        }
+  .slide-card {
+    flex: 0 0 280px; scroll-snap-align: start;
+    background: var(--glass);
+    backdrop-filter: var(--blur);
+    border: 1px solid rgba(255,255,255,.7);
+    border-radius: var(--r); overflow: hidden;
+    box-shadow: var(--shadow);
+    transition: transform .3s;
+  }
+  .slide-card:hover { transform: translateY(-6px); }
+  .slide-img {
+    width: 100%; height: 220px; object-fit: cover;
+    transition: transform .5s ease;
+  }
+  .slide-card:hover .slide-img { transform: scale(1.07); }
+  .slide-body { padding: 16px; }
+  .slide-tag {
+    font-size: .7rem; letter-spacing: .12em; text-transform: uppercase;
+    color: var(--rose); font-weight: 500;
+  }
+  .slide-name { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; margin: 4px 0; }
+  .slide-price { font-size: .85rem; color: var(--or); font-weight: 500; }
 
-        .product-card {
-            background: var(--bg-light);
-            border-radius: 4px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.02);
-            transition: transform 0.3s ease;
-        }
+  /* ─── BOUTIQUE ─── */
+  .shop-section { padding: 80px 24px; max-width: 1200px; margin: 0 auto; }
 
-        .product-card:hover {
-            transform: translateY(-5px);
-        }
+  /* Filtres */
+  .filters {
+    display: flex; flex-wrap: wrap; gap: 10px;
+    justify-content: center; margin-bottom: 40px;
+  }
+  .filter-btn {
+    background: var(--glass);
+    backdrop-filter: var(--blur);
+    border: 1.5px solid rgba(255,255,255,.7);
+    border-radius: 50px; padding: 8px 22px;
+    font-size: .82rem; font-family: 'DM Sans', sans-serif;
+    cursor: pointer; transition: all .2s; color: var(--texte);
+    font-weight: 500;
+  }
+  .filter-btn.active,
+  .filter-btn:hover {
+    background: linear-gradient(135deg, var(--rose), var(--lilas));
+    color: #fff; border-color: transparent;
+    box-shadow: 0 4px 16px rgba(200,100,160,.3);
+  }
 
-        /* Zone image avec effet hover zoom */
-        .product-image-container {
-            position: relative;
-            height: 450px; /* Grande hauteur pour mettre en valeur le produit */
-            overflow: hidden;
-        }
+  /* Grille */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 24px;
+  }
 
-        .product-image {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s ease;
-        }
+  .product-card {
+    background: var(--glass);
+    backdrop-filter: var(--blur);
+    border: 1px solid rgba(255,255,255,.7);
+    border-radius: var(--r); overflow: hidden;
+    box-shadow: var(--shadow);
+    transition: transform .3s, box-shadow .3s;
+    position: relative;
+  }
+  .product-card:hover { transform: translateY(-8px); box-shadow: 0 20px 60px rgba(180,130,160,.28); }
 
-        .product-card:hover .product-image {
-            transform: scale(1.06);
-        }
+  .product-img-wrap { position: relative; overflow: hidden; height: 280px; cursor: pointer; }
+  .product-img {
+    width: 100%; height: 100%; object-fit: cover;
+    transition: transform .6s ease;
+  }
+  .product-card:hover .product-img { transform: scale(1.1); }
 
-        /* Badges (petits trucs en plus) */
-        .badge {
-            position: absolute;
-            top: 15px;
-            left: 15px;
-            background-color: var(--accent-color);
-            color: white;
-            padding: 5px 12px;
-            font-size: 11px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
+  /* Stock badge */
+  .stock-badge {
+    position: absolute; top: 12px; left: 12px;
+    background: rgba(255,255,255,.85);
+    backdrop-filter: blur(6px);
+    border-radius: 50px; padding: 4px 12px;
+    font-size: .7rem; font-weight: 500; color: #c0392b;
+    display: flex; align-items: center; gap: 5px;
+  }
+  .stock-dot { width: 6px; height: 6px; border-radius: 50%; background: #c0392b; animation: pulse 1.5s infinite; }
+  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: .3; } }
 
-        .stock-warning {
-            position: absolute;
-            bottom: 15px;
-            right: 15px;
-            background-color: rgba(231, 76, 60, 0.9);
-            color: white;
-            padding: 4px 10px;
-            font-size: 11px;
-            font-weight: 600;
-            border-radius: 2px;
-        }
+  .new-badge {
+    position: absolute; top: 12px; right: 12px;
+    background: linear-gradient(135deg, var(--rose), var(--lilas));
+    color: #fff; border-radius: 50px;
+    padding: 4px 12px; font-size: .7rem; font-weight: 500;
+  }
 
-        /* Infos de l'article */
-        .product-info {
-            padding: 25px;
-            text-align: center;
-        }
+  .product-body { padding: 18px; }
+  .product-cat {
+    font-size: .7rem; letter-spacing: .14em;
+    text-transform: uppercase; color: var(--rose); font-weight: 500;
+  }
+  .product-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.25rem; margin: 4px 0 10px;
+  }
 
-        .product-category {
-            font-size: 11px;
-            text-transform: uppercase;
-            color: var(--text-muted);
-            letter-spacing: 1px;
-            margin-bottom: 8px;
-        }
+  .stars { color: var(--or); font-size: .85rem; margin-bottom: 10px; }
+  .stars span { font-size: .75rem; color: #999; margin-left: 4px; }
 
-        .product-title {
-            font-family: 'Playfair Display', serif;
-            font-size: 20px;
-            margin-bottom: 10px;
-        }
+  .product-footer { display: flex; align-items: center; justify-content: space-between; }
+  .product-price { font-size: 1rem; font-weight: 600; color: var(--texte); }
 
-        .product-price {
-            font-size: 18px;
-            font-weight: 600;
-            color: var(--accent-color);
-            margin-bottom: 20px;
-        }
+  .wa-btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: linear-gradient(135deg, #25D366, #128C7E);
+    color: #fff; border: none; border-radius: 50px;
+    padding: 9px 16px; font-size: .78rem; font-weight: 500;
+    cursor: pointer; text-decoration: none;
+    transition: transform .2s, box-shadow .2s;
+  }
+  .wa-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(37,211,102,.4); }
 
-        /* Bouton Commander via WhatsApp stylé */
-        .btn-whatsapp {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            width: 100%;
-            padding: 12px;
-            background-color: #25D366; /* Vert officiel WhatsApp */
-            color: white;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 14px;
-            border-radius: 4px;
-            transition: background-color 0.3s ease;
-        }
+  /* Lightbox */
+  .lightbox {
+    display: none; position: fixed; inset: 0; z-index: 200;
+    background: rgba(30,20,30,.75);
+    backdrop-filter: blur(12px);
+    align-items: center; justify-content: center;
+    animation: fadeIn .3s ease;
+  }
+  .lightbox.open { display: flex; }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  .lightbox img { max-width: 90vw; max-height: 85vh; border-radius: var(--r); box-shadow: 0 30px 80px rgba(0,0,0,.5); }
+  .lightbox-close {
+    position: fixed; top: 20px; right: 24px;
+    background: var(--glass); backdrop-filter: var(--blur);
+    border: 1px solid rgba(255,255,255,.5); border-radius: 50%;
+    width: 44px; height: 44px; font-size: 1.3rem; cursor: pointer;
+    display: flex; align-items: center; justify-content: center; color: #fff;
+  }
 
-        .btn-whatsapp:hover {
-            background-color: #128C7E;
-        }
+  /* ─── ENGAGEMENT ─── */
+  .engage-section {
+    padding: 80px 24px; text-align: center;
+    max-width: 900px; margin: 0 auto;
+  }
+  .engage-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 24px; margin-top: 48px; }
+  .engage-card {
+    background: var(--glass);
+    backdrop-filter: var(--blur);
+    border: 1px solid rgba(255,255,255,.7);
+    border-radius: var(--r); padding: 32px 20px;
+    box-shadow: var(--shadow);
+    transition: transform .3s;
+  }
+  .engage-card:hover { transform: translateY(-6px); }
+  .engage-icon { font-size: 2.2rem; margin-bottom: 12px; }
+  .engage-title { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; margin-bottom: 8px; }
+  .engage-text { font-size: .85rem; color: #7a6070; line-height: 1.6; }
 
-        /* --- FOOTER --- */
-        footer {
-            background-color: var(--primary-color);
-            color: white;
-            text-align: center;
-            padding: 40px 20px;
-            margin-top: 80px;
-            font-size: 14px;
-        }
+  /* ─── AVIS ─── */
+  .avis-section { padding: 80px 24px; background: rgba(255,255,255,.2); }
+  .avis-grid { display: flex; gap: 20px; overflow-x: auto; padding: 0 24px 12px; scrollbar-width: none; max-width: 1200px; margin: 40px auto 0; }
+  .avis-grid::-webkit-scrollbar { display: none; }
+  .avis-card {
+    flex: 0 0 260px;
+    background: var(--glass);
+    backdrop-filter: var(--blur);
+    border: 1px solid rgba(255,255,255,.7);
+    border-radius: var(--r); padding: 22px; box-shadow: var(--shadow);
+  }
+  .avis-stars { color: var(--or); font-size: .9rem; margin-bottom: 10px; }
+  .avis-text { font-size: .85rem; color: #5a4a55; line-height: 1.6; margin-bottom: 14px; font-style: italic; }
+  .avis-author { display: flex; align-items: center; gap: 10px; }
+  .avis-avatar {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--rose), var(--lilas));
+    display: flex; align-items: center; justify-content: center;
+    font-size: .9rem; color: #fff; font-weight: 600;
+  }
+  .avis-name { font-size: .82rem; font-weight: 500; }
+  .avis-date { font-size: .72rem; color: #999; }
 
-        footer p {
-            opacity: 0.7;
-        }
+  /* ─── CONTACT ─── */
+  .contact-section {
+    padding: 80px 24px; max-width: 700px; margin: 0 auto;
+  }
+  .contact-card {
+    background: var(--glass);
+    backdrop-filter: var(--blur);
+    border: 1px solid rgba(255,255,255,.8);
+    border-radius: 28px; padding: 48px 40px;
+    box-shadow: var(--shadow);
+  }
+  .contact-links { display: flex; flex-direction: column; gap: 16px; margin: 32px 0; }
+  .contact-link {
+    display: flex; align-items: center; gap: 14px;
+    background: rgba(255,255,255,.5);
+    border: 1px solid rgba(255,255,255,.8);
+    border-radius: 14px; padding: 14px 20px;
+    text-decoration: none; color: var(--texte);
+    font-weight: 500; transition: all .2s;
+  }
+  .contact-link:hover { background: rgba(255,255,255,.8); transform: translateX(6px); }
+  .contact-link-icon { font-size: 1.4rem; }
+  .contact-link-info { flex: 1; }
+  .contact-link-label { font-size: .72rem; text-transform: uppercase; letter-spacing: .1em; color: #999; }
+  .contact-link-val { font-size: .95rem; }
 
-        /* OPTIMISATION MOBILE */
-        @media (max-width: 768px) {
-            .hero h1 { font-size: 32px; }
-            .products-grid { grid-template-columns: 1fr; } /* Un seul grand article par ligne sur petit écran */
-            .product-image-container { height: 400px; }
-        }
-    </style>
+  .form-group { margin-bottom: 16px; }
+  .form-group label { display: block; font-size: .82rem; font-weight: 500; margin-bottom: 6px; }
+  .form-group input, .form-group textarea, .form-group select {
+    width: 100%; background: rgba(255,255,255,.6);
+    backdrop-filter: blur(8px);
+    border: 1.5px solid rgba(255,255,255,.8);
+    border-radius: 12px; padding: 12px 16px;
+    font-family: 'DM Sans', sans-serif; font-size: .9rem;
+    color: var(--texte); outline: none;
+    transition: border-color .2s;
+  }
+  .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
+    border-color: var(--rose);
+  }
+  .form-group textarea { height: 100px; resize: vertical; }
+
+  .submit-wa {
+    width: 100%; background: linear-gradient(135deg, #25D366, #128C7E);
+    color: #fff; border: none; border-radius: 50px;
+    padding: 16px; font-size: 1rem; font-weight: 500;
+    cursor: pointer; font-family: 'DM Sans', sans-serif;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    transition: transform .2s, box-shadow .2s;
+  }
+  .submit-wa:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(37,211,102,.4); }
+
+  /* ─── FOOTER ─── */
+  footer {
+    text-align: center; padding: 40px 24px;
+    font-size: .8rem; color: #9a8090;
+    border-top: 1px solid rgba(255,255,255,.5);
+  }
+  footer strong { color: var(--or); }
+
+  /* ─── REVEAL ON SCROLL ─── */
+  .reveal {
+    opacity: 0; transform: translateY(30px);
+    transition: opacity .7s ease, transform .7s ease;
+  }
+  .reveal.visible { opacity: 1; transform: none; }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .hamburger { display: flex; }
+    .grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
+    .contact-card { padding: 28px 20px; }
+    .hero h1 { font-size: 2.8rem; }
+  }
+  @media (max-width: 480px) {
+    .grid { grid-template-columns: 1fr; }
+  }
+
+  /* ─── MOBILE MENU ─── */
+  .mobile-menu {
+    display: none; position: fixed; inset: 0; z-index: 99;
+    background: rgba(253,246,240,.95);
+    backdrop-filter: var(--blur);
+    flex-direction: column; align-items: center; justify-content: center;
+    gap: 32px;
+  }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a { font-size: 1.5rem; font-family: 'Cormorant Garamond', serif; color: var(--texte); text-decoration: none; }
+  .mobile-close { position: absolute; top: 20px; right: 24px; font-size: 1.6rem; cursor: pointer; }
+</style>
 </head>
 <body>
 
-    <!-- Barre de Navigation -->
-    <header>
-        <div class="logo">EDITH SHOP</div>
-        <nav>
-            <a href="#collections">Collections</a>
-            <a href="#contact">Contact</a>
-        </nav>
-    </header>
+<!-- ─── FLOATERS ─── -->
+<div class="hero-floats" id="floats"></div>
 
-    <!-- Bannière Principale (Visuel Cinématique) -->
-    <section class="hero">
-        <h1>Le Style Sans Se Ruiner</h1>
-        <p>Découvrez notre sélection exclusive d'articles féminins à prix tout doux.</p>
-        <a href="#collections" class="btn-shop">Voir la collection</a>
-    </section>
+<!-- ─── NAV ─── -->
+<nav>
+  <a class="nav-logo" href="#home">Edith <span>Shop</span> 🦋</a>
+  <ul class="nav-links">
+    <li><a href="#boutique">Boutique</a></li>
+    <li><a href="#avis">Avis</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a class="nav-wa" href="https://wa.me/22654675060" target="_blank">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
+    WhatsApp
+  </a>
+  <div class="hamburger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
 
-    <!-- Section Catalogue -->
-    <section class="container" id="collections">
-        <h2 class="section-title">Nos Nouveautés</h2>
-        
-        <div class="products-grid">
-            
-            <!-- Article 1 -->
-            <div class="product-card">
-                <div class="product-image-container">
-                    <span class="badge">Nouveau</span>
-                    <!-- Remplacer le lien de l'image par une vraie photo d'Edith en grand plus tard -->
-                    <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=80&w=800&auto=format&fit=crop" alt="Robe Tendance" class="product-image">
-                    <span class="stock-warning"><i class="fa-solid fa-fire"></i> Stock Limité</span>
-                </div>
-                <div class="product-info">
-                    <p class="product-category">Vêtements</p>
-                    <h3 class="product-title">Robe d'Été Fluide</h3>
-                    <p class="product-price">5 500 CFA</p>
-                    <!-- Lien WhatsApp automatique personnalisé -->
-                    <a href="https://wa.me/226XXXXXXXX?text=Bonjour%20Edith%20Shop,%20je%20souhaite%20commander%20la%20Robe%20d'Eté%20Fluide" target="_blank" class="btn-whatsapp">
-                        <i class="fa-brands fa-whatsapp"></i> Commander sur WhatsApp
-                    </a>
-                </div>
-            </div>
+<!-- ─── MOBILE MENU ─── -->
+<div class="mobile-menu" id="mobileMenu">
+  <span class="mobile-close" onclick="toggleMenu()">✕</span>
+  <a href="#boutique" onclick="toggleMenu()">Boutique</a>
+  <a href="#avis" onclick="toggleMenu()">Avis Clientes</a>
+  <a href="#contact" onclick="toggleMenu()">Contact & Commande</a>
+  <a href="https://wa.me/22654675060" target="_blank" style="color:#25D366">📱 WhatsApp</a>
+</div>
 
-            <!-- Article 2 -->
-            <div class="product-card">
-                <div class="product-image-container">
-                    <span class="badge">Top Vente</span>
-                    <img src="https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?q=80&w=800&auto=format&fit=crop" alt="Sac à main chic" class="product-image">
-                </div>
-                <div class="product-info">
-                    <p class="product-category">Accessoires</p>
-                    <h3 class="product-title">Sac à Main Chic Minimaliste</h3>
-                    <p class="product-price">7 000 CFA</p>
-                    <a href="https://wa.me/226XXXXXXXX?text=Bonjour%20Edith%20Shop,%20je%20souhaite%20commander%20le%20Sac%20à%20Main%20Chic" target="_blank" class="btn-whatsapp">
-                        <i class="fa-brands fa-whatsapp"></i> Commander sur WhatsApp
-                    </a>
-                </div>
-            </div>
+<!-- ─── HERO ─── -->
+<section class="hero" id="home">
+  <div class="hero-badge">✨ Chic & Accessible</div>
+  <h1>Edith<br><em>Shop</em> 🦋</h1>
+  <p class="hero-tagline">« Le sang n'est pas dans le business »</p>
+  <a class="hero-cta" href="#boutique">
+    Découvrir la collection
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+  </a>
+</section>
 
-            <!-- Article 3 -->
-            <div class="product-card">
-                <div class="product-image-container">
-                    <img src="https://images.unsplash.com/photo-1596462502278-27bfdc403348?q=80&w=800&auto=format&fit=crop" alt="Coffret Maquillage" class="product-image">
-                </div>
-                <div class="product-info">
-                    <p class="product-category">Beauté</p>
-                    <h3 class="product-title">Glow Kit Maquillage</h3>
-                    <p class="product-price">4 500 CFA</p>
-                    <a href="https://wa.me/226XXXXXXXX?text=Bonjour%20Edith%20Shop,%20je%20souhaite%20commander%20le%20Glow%20Kit%20Maquillage" target="_blank" class="btn-whatsapp">
-                        <i class="fa-brands fa-whatsapp"></i> Commander sur WhatsApp
-                    </a>
-                </div>
-            </div>
+<!-- ─── TENDANCES ─── -->
+<section class="slider-section reveal">
+  <p class="section-label">Nouveautés</p>
+  <h2 class="section-title">Tendances du Moment</h2>
+  <div class="slider-track" id="sliderTrack"></div>
+</section>
 
+<!-- ─── BOUTIQUE ─── -->
+<section class="shop-section" id="boutique">
+  <p class="section-label">Notre catalogue</p>
+  <h2 class="section-title reveal">La Boutique</h2>
+
+  <div class="filters reveal">
+    <button class="filter-btn active" onclick="filterProducts('all', this)">Tout voir</button>
+    <button class="filter-btn" onclick="filterProducts('vetements', this)">👗 Vêtements</button>
+    <button class="filter-btn" onclick="filterProducts('accessoires', this)">💎 Accessoires</button>
+    <button class="filter-btn" onclick="filterProducts('maquillage', this)">💄 Maquillage</button>
+  </div>
+
+  <div class="grid" id="productGrid"></div>
+</section>
+
+<!-- ─── ENGAGEMENT ─── -->
+<section class="engage-section reveal">
+  <p class="section-label">Notre Promesse</p>
+  <h2 class="section-title">Le style accessible à toutes</h2>
+  <div class="engage-grid">
+    <div class="engage-card reveal">
+      <div class="engage-icon">🦋</div>
+      <div class="engage-title">Mode Accessible</div>
+      <p class="engage-text">Des pièces tendance à prix doux, pour que chaque femme se sente belle au quotidien.</p>
+    </div>
+    <div class="engage-card reveal">
+      <div class="engage-icon">📦</div>
+      <div class="engage-title">Livraison Rapide</div>
+      <p class="engage-text">Commandez via WhatsApp et recevez vos articles rapidement. Simple et efficace.</p>
+    </div>
+    <div class="engage-card reveal">
+      <div class="engage-icon">💬</div>
+      <div class="engage-title">Service Personnalisé</div>
+      <p class="engage-text">Une question ? Un conseil ? Soro Edith vous répond directement sur WhatsApp ou Snapchat.</p>
+    </div>
+    <div class="engage-card reveal">
+      <div class="engage-icon">⭐</div>
+      <div class="engage-title">Clientes Satisfaites</div>
+      <p class="engage-text">Des centaines de clientes comblées. Rejoignez la communauté Edith Shop !</p>
+    </div>
+  </div>
+</section>
+
+<!-- ─── AVIS ─── -->
+<section class="avis-section" id="avis">
+  <p class="section-label reveal">Ce qu'elles disent</p>
+  <h2 class="section-title reveal">Avis Clientes</h2>
+  <div class="avis-grid" id="avisGrid"></div>
+</section>
+
+<!-- ─── CONTACT ─── -->
+<section class="contact-section" id="contact">
+  <p class="section-label reveal">Nous joindre</p>
+  <h2 class="section-title reveal">Contact & Commande</h2>
+  <div class="contact-card reveal">
+    <div class="contact-links">
+      <a class="contact-link" href="https://wa.me/22654675060" target="_blank">
+        <span class="contact-link-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
+        </span>
+        <div class="contact-link-info">
+          <div class="contact-link-label">WhatsApp</div>
+          <div class="contact-link-val">54 67 50 60</div>
         </div>
-    </section>
+        <span>→</span>
+      </a>
+      <a class="contact-link" href="https://www.snapchat.com/add/SoroEdith" target="_blank">
+        <span class="contact-link-icon">👻</span>
+        <div class="contact-link-info">
+          <div class="contact-link-label">Snapchat</div>
+          <div class="contact-link-val">Soro Edith</div>
+        </div>
+        <span>→</span>
+      </a>
+      <a class="contact-link" href="https://facebook.com/SoroEdith" target="_blank">
+        <span class="contact-link-icon">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="#1877F2"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+        </span>
+        <div class="contact-link-info">
+          <div class="contact-link-label">Facebook</div>
+          <div class="contact-link-val">Soro Edith</div>
+        </div>
+        <span>→</span>
+      </a>
+    </div>
 
-    <!-- Pied de page -->
-    <footer id="contact">
-        <p>&copy; 2026 Edith Shop. Conçu avec style. Tous droits réservés.</p>
-    </section>
+    <hr style="border:none;border-top:1px solid rgba(255,255,255,.7);margin:24px 0;">
 
+    <p style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:300;margin-bottom:20px;">Envoyer un message direct</p>
+    <div class="form-group">
+      <label>Votre nom</label>
+      <input type="text" id="fname" placeholder="ex. Aminata Traoré">
+    </div>
+    <div class="form-group">
+      <label>Article souhaité</label>
+      <select id="fitem">
+        <option value="">Choisir un article…</option>
+        <option>Scrunchis</option>
+        <option>Boyfriend Jeans</option>
+        <option>Crop Top</option>
+        <option>Autre article</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Message (optionnel)</label>
+      <textarea id="fmsg" placeholder="Taille, couleur, quantité…"></textarea>
+    </div>
+    <button class="submit-wa" onclick="sendWA()">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
+      Commander via WhatsApp
+    </button>
+  </div>
+</section>
+
+<!-- ─── FOOTER ─── -->
+<footer>
+  <p>© 2025 <strong>Edith Shop 🦋</strong> · Fait avec ❤️ · <em>Le sang n'est pas dans le business</em></p>
+  <p style="margin-top:8px">WhatsApp : <a href="https://wa.me/22654675060" style="color:var(--rose);text-decoration:none;">54 67 50 60</a> · Snapchat & Facebook : Soro Edith</p>
+</footer>
+
+<!-- ─── LIGHTBOX ─── -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+  <img id="lightboxImg" src="" alt="">
+</div>
+
+<script>
+/* ─── DONNÉES PRODUITS ─── */
+const PHONE = '22654675060';
+
+const products = [
+  { id:1, name:'Scrunchis Pastel', cat:'accessoires', catLabel:'Accessoires', price:'500 FCFA', stock:3, new:true,
+    emoji:'🎀',
+    colors:['#f2a7c3','#c9a7e0','#a7c9e0','#f8cba6'],
+    rating:5, reviews:12 },
+  { id:2, name:'Boyfriend Jeans', cat:'vetements', catLabel:'Vêtements', price:'3 500 FCFA', stock:2, new:false,
+    emoji:'👖',
+    colors:['#a0b4cc','#7a8fa0'],
+    rating:5, reviews:8 },
+  { id:3, name:'Crop Top Stylé', cat:'vetements', catLabel:'Vêtements', price:'1 500 FCFA', stock:5, new:true,
+    emoji:'👚',
+    colors:['#f2a7c3','#f8cba6','#c9a7e0'],
+    rating:4, reviews:15 },
+  { id:4, name:'Ensemble 2 pièces', cat:'vetements', catLabel:'Vêtements', price:'4 000 FCFA', stock:1, new:true,
+    emoji:'👗',
+    colors:['#c9a7e0','#f2a7c3'],
+    rating:5, reviews:6 },
+  { id:5, name:'Kit Maquillage', cat:'maquillage', catLabel:'Maquillage', price:'2 000 FCFA', stock:4, new:false,
+    emoji:'💄',
+    colors:['#e07a7a','#c8a96e','#f2a7c3'],
+    rating:5, reviews:20 },
+  { id:6, name:'Scrunchis Velours', cat:'accessoires', catLabel:'Accessoires', price:'700 FCFA', stock:8, new:false,
+    emoji:'💜',
+    colors:['#7a5c8a','#c9a7e0','#3d2857'],
+    rating:4, reviews:9 },
+];
+
+/* Generate placeholder product image using canvas */
+function makeProductCanvas(product, w=400, h=400) {
+  const c = document.createElement('canvas');
+  c.width = w; c.height = h;
+  const ctx = c.getContext('2d');
+  // gradient bg
+  const g = ctx.createLinearGradient(0,0,w,h);
+  const cols = product.colors;
+  cols.forEach((c,i) => g.addColorStop(i/(cols.length-1||1), c));
+  ctx.fillStyle = g;
+  ctx.fillRect(0,0,w,h);
+  // subtle pattern
+  ctx.fillStyle = 'rgba(255,255,255,0.12)';
+  for(let i=0;i<8;i++){
+    ctx.beginPath();
+    ctx.arc(Math.random()*w, Math.random()*h, 20+Math.random()*60, 0, Math.PI*2);
+    ctx.fill();
+  }
+  // emoji
+  ctx.font = `${w*0.28}px serif`;
+  ctx.textAlign='center'; ctx.textBaseline='middle';
+  ctx.fillText(product.emoji, w/2, h/2);
+  return c.toDataURL();
+}
+
+/* Build star string */
+function stars(n) {
+  return '★'.repeat(n) + '☆'.repeat(5-n);
+}
+
+/* Stock badge */
+function stockBadge(n) {
+  if(n <= 2) return `<div class="stock-badge"><span class="stock-dot"></span>Plus que ${n} dispo !</div>`;
+  return '';
+}
+
+/* WA link per product */
+function waLink(name) {
+  const msg = encodeURIComponent(`Bonjour Edith Shop 🦋, je souhaite commander l'article : *${name}*. Merci !`);
+  return `https://wa.me/${PHONE}?text=${msg}`;
+}
+
+/* ─── RENDER PRODUCTS ─── */
+let currentFilter = 'all';
+function renderProducts(filter='all') {
+  const grid = document.getElementById('productGrid');
+  const filtered = filter === 'all' ? products : products.filter(p => p.cat === filter);
+  grid.innerHTML = filtered.map(p => {
+    const img = makeProductCanvas(p);
+    return `
+    <div class="product-card" data-cat="${p.cat}">
+      <div class="product-img-wrap" onclick="openLightbox('${img}')">
+        <img class="product-img" src="${img}" alt="${p.name}" loading="lazy">
+        ${stockBadge(p.stock)}
+        ${p.new ? '<span class="new-badge">Nouveau</span>' : ''}
+      </div>
+      <div class="product-body">
+        <div class="product-cat">${p.catLabel}</div>
+        <div class="product-name">${p.name}</div>
+        <div class="stars">${stars(p.rating)} <span>(${p.reviews} avis)</span></div>
+        <div class="product-footer">
+          <span class="product-price">${p.price}</span>
+          <a class="wa-btn" href="${waLink(p.name)}" target="_blank">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
+            Commander
+          </a>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function filterProducts(cat, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderProducts(cat);
+}
+
+/* ─── SLIDER ─── */
+function renderSlider() {
+  const track = document.getElementById('sliderTrack');
+  const trending = [products[2], products[1], products[0], products[4], products[3]];
+  track.innerHTML = trending.map(p => {
+    const img = makeProductCanvas(p, 280, 220);
+    return `
+    <div class="slide-card">
+      <img class="slide-img" src="${img}" alt="${p.name}">
+      <div class="slide-body">
+        <div class="slide-tag">${p.catLabel}</div>
+        <div class="slide-name">${p.name}</div>
+        <div class="slide-price">${p.price}</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+/* ─── AVIS ─── */
+const avisData = [
+  { name:'Fatoumata K.', note:5, text:'Les scrunchis sont trop mignons ! Livrée en moins de 24h. Je recommande à 100%.', initiale:'F', date:'Il y a 2 jours' },
+  { name:'Mariam S.', note:5, text:'Mon boyfriend jeans est parfait, la qualité est vraiment au top pour le prix !', initiale:'M', date:'Il y a 1 semaine' },
+  { name:'Awa D.', note:5, text:'Soro Edith est très réactive sur WhatsApp. Mon crop top est arrivé rapidement 🔥', initiale:'A', date:'Il y a 2 semaines' },
+  { name:'Raïssa B.', note:4, text:'Belle qualité, beaux modèles. Hâte de commander à nouveau pour les fêtes !', initiale:'R', date:'Il y a 3 semaines' },
+  { name:'Nadège T.', note:5, text:'Le kit maquillage est top, exactement comme sur les photos. Merci Edith Shop 🦋', initiale:'N', date:'Il y a 1 mois' },
+];
+
+function renderAvis() {
+  document.getElementById('avisGrid').innerHTML = avisData.map(a => `
+    <div class="avis-card">
+      <div class="avis-stars">${stars(a.note)}</div>
+      <p class="avis-text">"${a.text}"</p>
+      <div class="avis-author">
+        <div class="avis-avatar">${a.initiale}</div>
+        <div>
+          <div class="avis-name">${a.name}</div>
+          <div class="avis-date">${a.date}</div>
+        </div>
+      </div>
+    </div>`).join('');
+}
+
+/* ─── FLOATERS ─── */
+function spawnFloats() {
+  const items = ['🦋','🌸','✨','💜','🌺','⭐','🌷','💫'];
+  const container = document.getElementById('floats');
+  for(let i=0;i<14;i++) {
+    const el = document.createElement('div');
+    el.className = 'float';
+    el.textContent = items[Math.floor(Math.random()*items.length)];
+    el.style.left = Math.random()*100 + 'vw';
+    el.style.animationDuration = (10+Math.random()*16) + 's';
+    el.style.animationDelay = (-Math.random()*20) + 's';
+    el.style.fontSize = (.8+Math.random()*1.6) + 'rem';
+    container.appendChild(el);
+  }
+}
+
+/* ─── LIGHTBOX ─── */
+function openLightbox(src) {
+  document.getElementById('lightboxImg').src = src;
+  document.getElementById('lightbox').classList.add('open');
+}
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('open');
+}
+
+/* ─── SEND WA FORM ─── */
+function sendWA() {
+  const name  = document.getElementById('fname').value.trim() || 'une cliente';
+  const item  = document.getElementById('fitem').value || 'un article';
+  const msg   = document.getElementById('fmsg').value.trim();
+  const text  = `Bonjour Edith Shop 🦋 !\nJe m'appelle *${name}* et je souhaite commander : *${item}*.${msg ? '\n\n'+msg : ''}\nMerci !`;
+  window.open(`https://wa.me/${PHONE}?text=${encodeURIComponent(text)}`, '_blank');
+}
+
+/* ─── MOBILE MENU ─── */
+function toggleMenu() {
+  document.getElementById('mobileMenu').classList.toggle('open');
+}
+
+/* ─── SCROLL REVEAL ─── */
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+}, { threshold: 0.12 });
+
+/* ─── INIT ─── */
+spawnFloats();
+renderSlider();
+renderProducts();
+renderAvis();
+
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
 </body>
 </html>
