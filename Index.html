@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edith Shop | Tendances Féminines à Petit Prix</title>
+    <!-- Intégration de polices élégantes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <!-- Icônes FontAwesome pour le style -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* --- STYLES GENERAUX --- */
+        :root {
+            --primary-color: #111;
+            --accent-color: #e0a96d; /* Un doré/beige élégant */
+            --bg-light: #f9f9f9;
+            --text-muted: #666;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        body {
+            background-color: #fff;
+            color: var(--primary-color);
+            line-height: 1.6;
+        }
+
+        /* --- EN-TÊTE / NAVIGATION --- */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 5%;
+            border-bottom: 1px solid #eee;
+            position: sticky;
+            top: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(5px);
+            z-index: 1000;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: 2px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--primary-color);
+            margin-left: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--accent-color);
+        }
+
+        /* --- SECTION HERO (BANNIÈRE PRINCIPALE 4K) --- */
+        .hero {
+            height: 80vh;
+            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1483985988355-763728e1935b?q=80&w=1920&auto=format&fit=crop') no-repeat center center/cover;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+            padding: 0 20px;
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 48px;
+            margin-bottom: 15px;
+            letter-spacing: 3px;
+        }
+
+        .hero p {
+            font-size: 18px;
+            margin-bottom: 25px;
+            font-weight: 300;
+        }
+
+        .btn-shop {
+            padding: 12px 35px;
+            background-color: white;
+            color: black;
+            text-decoration: none;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 13px;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-shop:hover {
+            background-color: var(--accent-color);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* --- SECTION ARTICLES (GRANDS VISUELS) --- */
+        .container {
+            max-width: 1200px;
+            margin: 60px auto;
+            padding: 0 20px;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            text-align: center;
+            font-size: 32px;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 50px;
+            height: 2px;
+            background-color: var(--accent-color);
+            margin: 10px auto 0;
+        }
+
+        /* Grille d'affichage des articles */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); /* Grands blocs d'articles */
+            gap: 40px;
+        }
+
+        .product-card {
+            background: var(--bg-light);
+            border-radius: 4px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.02);
+            transition: transform 0.3s ease;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+
+        /* Zone image avec effet hover zoom */
+        .product-image-container {
+            position: relative;
+            height: 450px; /* Grande hauteur pour mettre en valeur le produit */
+            overflow: hidden;
+        }
+
+        .product-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .product-card:hover .product-image {
+            transform: scale(1.06);
+        }
+
+        /* Badges (petits trucs en plus) */
+        .badge {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background-color: var(--accent-color);
+            color: white;
+            padding: 5px 12px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .stock-warning {
+            position: absolute;
+            bottom: 15px;
+            right: 15px;
+            background-color: rgba(231, 76, 60, 0.9);
+            color: white;
+            padding: 4px 10px;
+            font-size: 11px;
+            font-weight: 600;
+            border-radius: 2px;
+        }
+
+        /* Infos de l'article */
+        .product-info {
+            padding: 25px;
+            text-align: center;
+        }
+
+        .product-category {
+            font-size: 11px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+
+        .product-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .product-price {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--accent-color);
+            margin-bottom: 20px;
+        }
+
+        /* Bouton Commander via WhatsApp stylé */
+        .btn-whatsapp {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            padding: 12px;
+            background-color: #25D366; /* Vert officiel WhatsApp */
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-whatsapp:hover {
+            background-color: #128C7E;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            background-color: var(--primary-color);
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+            margin-top: 80px;
+            font-size: 14px;
+        }
+
+        footer p {
+            opacity: 0.7;
+        }
+
+        /* OPTIMISATION MOBILE */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 32px; }
+            .products-grid { grid-template-columns: 1fr; } /* Un seul grand article par ligne sur petit écran */
+            .product-image-container { height: 400px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Barre de Navigation -->
+    <header>
+        <div class="logo">EDITH SHOP</div>
+        <nav>
+            <a href="#collections">Collections</a>
+            <a href="#contact">Contact</a>
+        </nav>
+    </header>
+
+    <!-- Bannière Principale (Visuel Cinématique) -->
+    <section class="hero">
+        <h1>Le Style Sans Se Ruiner</h1>
+        <p>Découvrez notre sélection exclusive d'articles féminins à prix tout doux.</p>
+        <a href="#collections" class="btn-shop">Voir la collection</a>
+    </section>
+
+    <!-- Section Catalogue -->
+    <section class="container" id="collections">
+        <h2 class="section-title">Nos Nouveautés</h2>
+        
+        <div class="products-grid">
+            
+            <!-- Article 1 -->
+            <div class="product-card">
+                <div class="product-image-container">
+                    <span class="badge">Nouveau</span>
+                    <!-- Remplacer le lien de l'image par une vraie photo d'Edith en grand plus tard -->
+                    <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=80&w=800&auto=format&fit=crop" alt="Robe Tendance" class="product-image">
+                    <span class="stock-warning"><i class="fa-solid fa-fire"></i> Stock Limité</span>
+                </div>
+                <div class="product-info">
+                    <p class="product-category">Vêtements</p>
+                    <h3 class="product-title">Robe d'Été Fluide</h3>
+                    <p class="product-price">5 500 CFA</p>
+                    <!-- Lien WhatsApp automatique personnalisé -->
+                    <a href="https://wa.me/226XXXXXXXX?text=Bonjour%20Edith%20Shop,%20je%20souhaite%20commander%20la%20Robe%20d'Eté%20Fluide" target="_blank" class="btn-whatsapp">
+                        <i class="fa-brands fa-whatsapp"></i> Commander sur WhatsApp
+                    </a>
+                </div>
+            </div>
+
+            <!-- Article 2 -->
+            <div class="product-card">
+                <div class="product-image-container">
+                    <span class="badge">Top Vente</span>
+                    <img src="https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?q=80&w=800&auto=format&fit=crop" alt="Sac à main chic" class="product-image">
+                </div>
+                <div class="product-info">
+                    <p class="product-category">Accessoires</p>
+                    <h3 class="product-title">Sac à Main Chic Minimaliste</h3>
+                    <p class="product-price">7 000 CFA</p>
+                    <a href="https://wa.me/226XXXXXXXX?text=Bonjour%20Edith%20Shop,%20je%20souhaite%20commander%20le%20Sac%20à%20Main%20Chic" target="_blank" class="btn-whatsapp">
+                        <i class="fa-brands fa-whatsapp"></i> Commander sur WhatsApp
+                    </a>
+                </div>
+            </div>
+
+            <!-- Article 3 -->
+            <div class="product-card">
+                <div class="product-image-container">
+                    <img src="https://images.unsplash.com/photo-1596462502278-27bfdc403348?q=80&w=800&auto=format&fit=crop" alt="Coffret Maquillage" class="product-image">
+                </div>
+                <div class="product-info">
+                    <p class="product-category">Beauté</p>
+                    <h3 class="product-title">Glow Kit Maquillage</h3>
+                    <p class="product-price">4 500 CFA</p>
+                    <a href="https://wa.me/226XXXXXXXX?text=Bonjour%20Edith%20Shop,%20je%20souhaite%20commander%20le%20Glow%20Kit%20Maquillage" target="_blank" class="btn-whatsapp">
+                        <i class="fa-brands fa-whatsapp"></i> Commander sur WhatsApp
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Pied de page -->
+    <footer id="contact">
+        <p>&copy; 2026 Edith Shop. Conçu avec style. Tous droits réservés.</p>
+    </section>
+
+</body>
+</html>
